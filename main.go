@@ -26,7 +26,7 @@ func main() {
 	insightsClient := appinsights.NewTelemetryClient(cfg.InstrumentationKey)
 
 	log := logger.Must(
-		logger.NewWithInsights(insightsClient),
+		logger.NewLogger(insightsClient),
 	)
 
 	app := di.CreateApi(cfg, client, log)

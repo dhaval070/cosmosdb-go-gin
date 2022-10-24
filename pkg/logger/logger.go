@@ -15,21 +15,7 @@ type Logger struct {
 	insightsClient appinsights.TelemetryClient
 }
 
-func NewLogger() (*Logger, error) {
-	z, err := zap.NewDevelopment()
-	if err != nil {
-		return nil, fmt.Errorf("%v", err)
-	}
-
-	return &Logger{
-		z.WithOptions(
-			zap.AddCallerSkip(1),
-		).Sugar(),
-		nil,
-	}, nil
-}
-
-func NewWithInsights(client appinsights.TelemetryClient) (*Logger, error) {
+func NewLogger(client appinsights.TelemetryClient) (*Logger, error) {
 	z, err := zap.NewDevelopment()
 	if err != nil {
 		return nil, fmt.Errorf("%v", err)
