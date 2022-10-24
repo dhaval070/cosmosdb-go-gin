@@ -25,10 +25,13 @@ func main() {
 
 	insightsClient := appinsights.NewTelemetryClient(cfg.InstrumentationKey)
 
-	log := logger.Must(
+	insightsClient.SetIsEnabled(cfg.EnableTelemetry)
+	log.Println("telemetry enabled: ", cfg.EnableTelemetry)
+
+	logger := logger.Must(
 		logger.NewLogger(insightsClient),
 	)
 
-	app := di.CreateApi(cfg, client, log)
+	app := di.CreateApi(cfg, client, logger)
 	app.Run(":8080")
 }

@@ -11,6 +11,7 @@ type Config struct {
 	DbEndpoint         string `mapstructure:"DB_ENDPOINT"`
 	Address            string `mapstructure:"ADDRESS"`
 	InstrumentationKey string `mapstructure:"INSTRUMENTATION_KEY"`
+	EnableTelemetry    bool   `mapstructure:"ENABLE_TELEMETRY"`
 }
 
 var vars = []string{"DB_KEY", "DB_ENDPOINT", "INSTRUMENTATION_KEY"}
