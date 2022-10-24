@@ -7,12 +7,13 @@ import (
 )
 
 type Config struct {
-	DbKey      string `mapstructure:"DB_KEY"`
-	DbEndpoint string `mapstructure:"DB_ENDPOINT"`
-	Address    string `mapstructure:"ADDRESS"`
+	DbKey              string `mapstructure:"DB_KEY"`
+	DbEndpoint         string `mapstructure:"DB_ENDPOINT"`
+	Address            string `mapstructure:"ADDRESS"`
+	InstrumentationKey string `mapstructure:"INSTRUMENTATION_KEY"`
 }
 
-var vars = []string{"DB_KEY", "DB_ENDPOINT"}
+var vars = []string{"DB_KEY", "DB_ENDPOINT", "INSTRUMENTATION_KEY"}
 
 func Load() *Config {
 	viper.SetConfigName("app")

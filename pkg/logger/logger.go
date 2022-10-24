@@ -3,11 +3,15 @@ package logger
 import (
 	"fmt"
 
+	"github.com/microsoft/ApplicationInsights-Go/appinsights"
+	"github.com/microsoft/ApplicationInsights-Go/appinsights/contracts"
 	"go.uber.org/zap"
 )
 
+// trace, request, exception
 type Logger struct {
-	log *zap.SugaredLogger
+	log            *zap.SugaredLogger
+	insightsClient appinsights.TelemetryClient
 }
 
 func NewLogger() (*Logger, error) {
@@ -20,6 +24,19 @@ func NewLogger() (*Logger, error) {
 		z.WithOptions(
 			zap.AddCallerSkip(1),
 		).Sugar(),
+		nil,
+	}, nil
+}
+
+func NewWithInsights(client appinsights.TelemetryClient) (*Logger, error) {
+	z, err := zap.NewDevelopment()
+	if err != nil {
+		return nil, fmt.Errorf("%v", err)
+	}
+
+	return &Logger{
+		log:            z.WithOptions(zap.AddCallerSkip(1)).Sugar(),
+		insightsClient: client,
 	}, nil
 }
 
@@ -30,8 +47,18 @@ func Must(l *Logger, err error) *Logger {
 	return l
 }
 
+func argsToString(args ...any) string {
+	var msg = ""
+	for _, v := range args {
+		msg = msg + fmt.Sprintf("%v ", v)
+	}
+	return msg
+}
+
 func (l *Logger) Info(args ...any) {
 	l.log.Info(args)
+
+	l.insightsClient.TrackTrace(argsToString(args), contracts.Information)
 }
 
 func (l *Logger) Infow(msg string, args ...any) {

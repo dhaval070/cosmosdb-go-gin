@@ -6,11 +6,13 @@ require (
 	github.com/Azure/azure-sdk-for-go/sdk/data/azcosmos v0.3.2
 	github.com/gin-gonic/gin v1.8.1
 	github.com/google/wire v0.5.0
+	github.com/microsoft/ApplicationInsights-Go v0.4.4
 	github.com/spf13/viper v1.13.0
 	go.uber.org/zap v1.23.0
 )
 
 require (
+	code.cloudfoundry.org/clock v0.0.0-20180518195852-02e53af36e6c // indirect
 	github.com/Azure/azure-sdk-for-go v63.2.0+incompatible // indirect
 	github.com/Azure/azure-sdk-for-go/sdk/azcore v1.0.0 // indirect
 	github.com/Azure/azure-sdk-for-go/sdk/internal v1.0.0 // indirect
@@ -20,6 +22,7 @@ require (
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.10.0 // indirect
 	github.com/goccy/go-json v0.9.7 // indirect
+	github.com/gofrs/uuid v3.3.0+incompatible // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect

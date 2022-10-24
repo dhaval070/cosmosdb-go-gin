@@ -7,6 +7,7 @@ import (
 	"log"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/data/azcosmos"
+	"github.com/microsoft/ApplicationInsights-Go/appinsights"
 )
 
 func main() {
@@ -22,6 +23,12 @@ func main() {
 		log.Fatal(err)
 	}
 
-	app := di.CreateApi(cfg, client, logger.Must(logger.NewLogger()))
+	insightsClient := appinsights.NewTelemetryClient(cfg.InstrumentationKey)
+
+	log := logger.Must(
+		logger.NewWithInsights(insightsClient),
+	)
+
+	app := di.CreateApi(cfg, client, log)
 	app.Run(":8080")
 }
