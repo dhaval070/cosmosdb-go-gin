@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/microsoft/ApplicationInsights-Go/appinsights"
@@ -63,10 +64,16 @@ func (l *Logger) Info(args ...any) {
 
 func (l *Logger) Infow(msg string, args ...any) {
 	l.log.Info(msg, args)
+
+	msg = msg + " " + argsToString(args)
+	l.insightsClient.TrackTrace(msg, contracts.Information)
 }
 
 func (l *Logger) Infof(msg string, args ...any) {
 	l.log.Infof(msg, args)
+
+	msg = fmt.Sprintf(msg, args)
+	l.insightsClient.TrackTrace(msg, contracts.Information)
 }
 
 func (l *Logger) Debug(args ...any) {
@@ -83,14 +90,30 @@ func (l *Logger) Debugf(msg string, args ...any) {
 
 func (l *Logger) Error(args ...any) {
 	l.log.Error(args)
+
+	msg := argsToString(args)
+
+	exception := appinsights.NewExceptionTelemetry(errors.New(msg))
+	exception.Frames = exception.Frames[1:]
+	l.insightsClient.Track(exception)
 }
 
 func (l *Logger) Errorw(msg string, args ...any) {
 	l.log.Error(msg, args)
+
+	msg = msg + " " + argsToString(args)
+	exception := appinsights.NewExceptionTelemetry(errors.New(msg))
+	exception.Frames = exception.Frames[1:]
+	l.insightsClient.Track(exception)
 }
 
 func (l *Logger) Errorf(msg string, args ...any) {
 	l.log.Errorf(msg, args)
+
+	msg = fmt.Sprintf(msg, args)
+	exception := appinsights.NewExceptionTelemetry(errors.New(msg))
+	exception.Frames = exception.Frames[1:]
+	l.insightsClient.Track(exception)
 }
 
 func (l *Logger) Warn(args ...any) {
