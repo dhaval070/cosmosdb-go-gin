@@ -14,14 +14,15 @@ import (
 	"cosmosdb-gin/pkg/repository"
 	"cosmosdb-gin/pkg/usecase"
 	"github.com/Azure/azure-sdk-for-go/sdk/data/azcosmos"
+	"github.com/microsoft/ApplicationInsights-Go/appinsights"
 )
 
 // Injectors from wire.go:
 
-func CreateApi(cfg *config.Config, db *azcosmos.Client, log logger.ILogger) *api.HttpServer {
+func CreateApi(cfg *config.Config, db *azcosmos.Client, log logger.ILogger, client appinsights.TelemetryClient) *api.HttpServer {
 	repo := repository.NewRepo(db, log)
 	useCase := usecase.NewUseCase(repo, log)
 	handlerHandler := handler.NewHandler(log, useCase)
-	httpServer := api.NewHttpServer(handlerHandler)
+	httpServer := api.NewHttpServer(handlerHandler, client)
 	return httpServer
 }

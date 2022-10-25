@@ -32,6 +32,6 @@ func main() {
 		logger.NewLogger(insightsClient),
 	)
 
-	app := di.CreateApi(cfg, client, logger)
+	app := di.CreateApi(cfg, client, logger, insightsClient)
 	app.Run(":8080")
 }

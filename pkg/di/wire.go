@@ -10,9 +10,10 @@ import (
 
 	"github.com/Azure/azure-sdk-for-go/sdk/data/azcosmos"
 	"github.com/google/wire"
+	"github.com/microsoft/ApplicationInsights-Go/appinsights"
 )
 
-func CreateApi(cfg *config.Config, db *azcosmos.Client, log logger.ILogger) (http *api.HttpServer) {
+func CreateApi(cfg *config.Config, db *azcosmos.Client, log logger.ILogger, client appinsights.TelemetryClient) (http *api.HttpServer) {
 	wire.Build(api.NewHttpServer, handler.Wired)
 
 	return http
