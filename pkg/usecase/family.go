@@ -22,7 +22,7 @@ func (uc *UseCase) GetFamily(ctx context.Context, id string) (*model.Family, err
 	var err error
 
 	uc.log.Debug("getfamily")
-	row, err := uc.repo.GetFamily(id)
+	row, err := uc.repo.GetFamily(ctx, id)
 	return row, err
 }
 

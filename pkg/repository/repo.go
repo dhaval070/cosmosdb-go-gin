@@ -24,7 +24,7 @@ func NewRepo(c *azcosmos.Client, log logger.ILogger) *repo {
 	}
 }
 
-func (r *repo) GetFamily(id string) (*model.Family, error) {
+func (r *repo) GetFamily(ctx context.Context, id string) (*model.Family, error) {
 	c, err := r.client.NewContainer("ToDoList", "families")
 
 	if err != nil {
@@ -53,7 +53,7 @@ func (r *repo) GetFamily(id string) (*model.Family, error) {
 	return &family, nil
 }
 
-func (r *repo) Hello() string {
+func (r *repo) Hello(ctx context.Context) string {
 	return "hi from repo"
 }
 

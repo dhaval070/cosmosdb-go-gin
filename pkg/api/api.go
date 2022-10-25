@@ -12,12 +12,22 @@ type HttpServer struct {
 	c *gin.Engine
 }
 
+func appHandler(h func(c *gin.Context) error) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		err := h(c)
+
+		if err != nil {
+			c.Error(err)
+		}
+	}
+}
+
 func NewHttpServer(h *handler.Handler, client appinsights.TelemetryClient) *HttpServer {
 	router := gin.Default()
 
 	router.Use(middleware.Telemetry(client))
 	router.GET("/family/:id", h.GetFamily)
-	router.GET("/hello", h.Hello)
+	router.GET("/hello", appHandler(h.Hello))
 	return &HttpServer{router}
 }
 

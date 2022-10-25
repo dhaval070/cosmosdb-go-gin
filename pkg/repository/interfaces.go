@@ -1,8 +1,11 @@
 package repository
 
-import "cosmosdb-gin/pkg/model"
+import (
+	"context"
+	"cosmosdb-gin/pkg/model"
+)
 
 type IRepo interface {
-	Hello() string
-	GetFamily(id string) (*model.Family, error)
+	Hello(ctx context.Context) string
+	GetFamily(ctx context.Context, id string) (*model.Family, error)
 }

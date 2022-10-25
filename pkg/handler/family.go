@@ -31,6 +31,7 @@ func HandleError(c *gin.Context, err error) bool {
 	default:
 		c.AbortWithError(500, err)
 	}
+	c.Error(err)
 	return true
 }
 
@@ -47,8 +48,9 @@ func (h *Handler) GetFamily(c *gin.Context) {
 	c.JSON(200, gin.H{"result": row})
 }
 
-func (h *Handler) Hello(c *gin.Context) {
+func (h *Handler) Hello(c *gin.Context) error {
 	c.String(200, "hello")
+	return errors.New("in hello error")
 }
 
 var Wired = wire.NewSet(NewHandler, usecase.Wired)
