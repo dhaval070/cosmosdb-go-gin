@@ -21,7 +21,7 @@ func NewUseCase(repo repository.IRepo, l logger.ILogger) *UseCase {
 func (uc *UseCase) GetFamily(ctx context.Context, id string) (*model.Family, error) {
 	var err error
 
-	uc.log.Debug("getfamily")
+	uc.log.Debug(ctx, "getfamily")
 	row, err := uc.repo.GetFamily(ctx, id)
 	return row, err
 }

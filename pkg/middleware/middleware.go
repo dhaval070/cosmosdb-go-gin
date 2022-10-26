@@ -12,7 +12,7 @@ import (
 func Telemetry(client appinsights.TelemetryClient) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		reqID := uuid.New().String()
-		c.Set("requestID", reqID)
+		c.Set("reqID", reqID)
 		t := time.Now()
 		c.Next()
 

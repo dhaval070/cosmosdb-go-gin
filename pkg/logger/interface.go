@@ -1,5 +1,7 @@
 package logger
 
+import "context"
+
 type ILogger interface {
 	Info(args ...any)
 
@@ -7,7 +9,7 @@ type ILogger interface {
 
 	Infof(msg string, args ...any)
 
-	Debug(args ...any)
+	Debug(ctx context.Context, args ...any)
 
 	Debugw(msg string, args ...any)
 

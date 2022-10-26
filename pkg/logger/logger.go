@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"context"
 	"errors"
 	"fmt"
 
@@ -62,8 +63,12 @@ func (l *Logger) Infof(msg string, args ...any) {
 	l.insightsClient.TrackTrace(msg, contracts.Information)
 }
 
-func (l *Logger) Debug(args ...any) {
-	l.log.Debug(args)
+func (l *Logger) Debug(ctx context.Context, args ...any) {
+	log := l.log
+	if reqID := ctx.Value("reqID"); reqID != nil {
+		log = log.With(zap.String("reqID", reqID.(string)))
+	}
+	log.Debug(args)
 }
 
 func (l *Logger) Debugw(msg string, args ...any) {
