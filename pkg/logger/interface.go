@@ -4,12 +4,14 @@ import "context"
 
 type ILogger interface {
 	Info(args ...any)
+	InfoCtx(ctx context.Context, args ...any)
 
 	Infow(msg string, args ...any)
 
 	Infof(msg string, args ...any)
 
-	Debug(ctx context.Context, args ...any)
+	Debug(args ...any)
+	DebugCtx(ctx context.Context, args ...any)
 
 	Debugw(msg string, args ...any)
 

@@ -37,7 +37,7 @@ func HandleError(c *gin.Context, err error) bool {
 
 func (h *Handler) GetFamily(c *gin.Context) {
 	id := c.Param("id")
-	h.Info("get family", id)
+	h.InfoCtx(c, "get family", id)
 
 	row, err := h.uc.GetFamily(c, c.Param("id"))
 
